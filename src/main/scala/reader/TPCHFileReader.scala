@@ -3,6 +3,7 @@ package reader
 import com.typesafe.config.ConfigFactory
 
 import scala.collection.mutable
+import scala.collection.mutable.ListBuffer
 import scala.io.Source
 
 object TPCHFileReader extends App {
@@ -10,9 +11,12 @@ object TPCHFileReader extends App {
   val config = ConfigFactory.load()
 
   //three hashmaps for each table
-  val view_L : mutable.HashMap[List[String],Int] = mutable.HashMap.empty
+  /*val view_L : mutable.HashMap[List[String],Int] = mutable.HashMap.empty
   val view_PS : mutable.HashMap[List[String],Int] = mutable.HashMap.empty
-  val view_S : mutable.HashMap[List[String],Int] = mutable.HashMap.empty
+  val view_S : mutable.HashMap[List[String],Int] = mutable.HashMap.empty*/
+  val view_L :ListBuffer[(List[String],Int)] = ListBuffer.empty
+  val view_PS :ListBuffer[(List[String],Int)] = ListBuffer.empty
+  val view_S :ListBuffer[(List[String],Int)] = ListBuffer.empty
 
   //get the start time of the reading
   val startTime = System.nanoTime
@@ -30,10 +34,11 @@ object TPCHFileReader extends App {
     val (relationName, tuple) = TPCHFileParser.parse(l)
 
     println("to make an insertion in relation: "+relationName)
+    val tupleToInsert: (List[String], Int) = (tuple,1)
     relationName match {
-      case "L" => view_L.put(tuple,1)
-      case "PS" => view_PS.put(tuple,1)
-      case "S" => view_S.put(tuple,1)
+      case "L" => view_L += tupleToInsert
+      case "PS" => view_PS += tupleToInsert
+      case "S" => view_S += tupleToInsert
       case _      =>
     }
   }
