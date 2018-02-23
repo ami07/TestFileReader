@@ -33,7 +33,7 @@ object TPCHFileReader extends App {
     //parse the line
     val (relationName, tuple) = TPCHFileParser.parse(l)
 
-    println("to make an insertion in relation: "+relationName)
+    //println("to make an insertion in relation: "+relationName)
     val tupleToInsert: (List[String], Int) = (tuple,1)
     relationName match {
       case "L" => view_L += tupleToInsert
