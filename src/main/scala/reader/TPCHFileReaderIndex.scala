@@ -44,9 +44,9 @@ object TPCHFileReaderIndex {
       //println("to make an insertion in relation: "+relationName)
       val tupleToInsert: (List[String], Int) = (tuple,1)
       relationName match {
-        case "L"  => view_L.put((tuple(0).toInt,tuple(1).toInt),tuple.tail.tail)
-        case "PS" => view_PS.put(tuple(0).toInt,tuple.tail)
-        case "S"  => view_P.put(tuple(0).toInt,tuple.tail)
+        case "L"  => view_L.put((tuple(0).toInt,tuple(1).toInt),tuple)
+        case "PS" => view_PS.put(tuple(0).toInt,tuple)
+        case "S"  => view_P.put(tuple(0).toInt,tuple)
         case _    =>
       }
     }
